@@ -13,9 +13,25 @@ resource "google_compute_address" "minecraft" {
   address_type = "EXTERNAL"
 }
 
+resource "google_compute_firewall" "web-server" {
+  name    = "web-server"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  target_tags = ["mc"]
+
+  source_ranges = ["0.0.0.0/0"]
+}
+
 resource "google_compute_instance" "minecraft" {
   name         = var.ce
   machine_type = "f1-micro"
+
+  tags = ["mc"]
 
   boot_disk {
     initialize_params {
