@@ -12,3 +12,8 @@ variable "zone" {
   description = "Zone to create resource in"
   type        = string
 }
+
+variable "ce" {
+  description = "Name to be used for Compute Engine instance"
+  type        = string
+}
