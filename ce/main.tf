@@ -4,15 +4,18 @@ provider "google" {
   zone    = var.zone
 }
 
+// Get the latest Container-Optimized OS image
 data "google_compute_image" "cos" {
   family = "cos-stable"
 }
 
+// Static External address for the server
 resource "google_compute_address" "minecraft" {
   name         = var.ce
   address_type = "EXTERNAL"
 }
 
+// Firewall policy to allow external access to server
 resource "google_compute_firewall" "web-server" {
   name    = "web-server"
   network = "default"
@@ -27,6 +30,7 @@ resource "google_compute_firewall" "web-server" {
   source_ranges = ["0.0.0.0/0"]
 }
 
+// Compute Engine instance configuration
 resource "google_compute_instance" "minecraft" {
   name         = var.ce
   machine_type = "f1-micro"
