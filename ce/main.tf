@@ -7,6 +7,7 @@ provider "google" {
 // Get the latest Container-Optimized OS image
 data "google_compute_image" "cos" {
   family = "cos-stable"
+  project = "cos-cloud"
 }
 
 // Static External address for the server
@@ -40,7 +41,7 @@ resource "google_compute_instance" "minecraft" {
   boot_disk {
     initialize_params {
       type  = "pd-standard"
-      image = data.google_compute_image.cos
+      image = data.google_compute_image.cos.self_link
     }
   }
 
