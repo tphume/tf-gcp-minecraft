@@ -17,3 +17,13 @@ variable "ce" {
   description = "Name to be used for Compute Engine instance"
   type        = string
 }
+
+variable "mtype" {
+  description = "Type of machine for Compute Engine instance"
+  type        = string
+}
+
+variable "mc_version" {
+  description = "Version of the Minecraft server"
+  type        = string
+}

@@ -6,7 +6,7 @@ provider "google" {
 
 // Get the latest Container-Optimized OS image
 data "google_compute_image" "cos" {
-  family = "cos-stable"
+  family  = "cos-stable"
   project = "cos-cloud"
 }
 
@@ -34,7 +34,7 @@ resource "google_compute_firewall" "web-server" {
 // Compute Engine instance configuration
 resource "google_compute_instance" "minecraft" {
   name         = var.ce
-  machine_type = "f1-micro"
+  machine_type = var.mtype
 
   tags = ["mc"]
 
@@ -51,4 +51,9 @@ resource "google_compute_instance" "minecraft" {
       nat_ip = google_compute_address.minecraft.address
     }
   }
+
+  metadata_startup_script = <<-EOT
+    docker run -d -p 80:25565 -e VERSION=${var.mc_version}
+    \ --restart always --name mc itzg/minecraft-server
+  EOT
 }
