@@ -60,7 +60,7 @@ resource "google_compute_instance" "minecraft" {
     }
   }
 
-  metadata {
+  metadata = {
     user-data = data.template_file.cloud_init.rendered
   }
 }
