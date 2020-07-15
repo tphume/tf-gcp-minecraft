@@ -31,6 +31,14 @@ resource "google_compute_firewall" "web-server" {
   source_ranges = ["0.0.0.0/0"]
 }
 
+// Template file setting up the instance
+data "template_file" "cloud_init" {
+  template = "${file("cloud-init.yml.tpl")}"
+  vars = {
+    version = var.mc_version
+  }
+}
+
 // Compute Engine instance configuration
 resource "google_compute_instance" "minecraft" {
   name         = var.ce
@@ -52,8 +60,7 @@ resource "google_compute_instance" "minecraft" {
     }
   }
 
-  metadata_startup_script = <<-EOT
-    docker run -d -p 80:25565 -e VERSION=${var.mc_version} \
-    --restart always --name mc itzg/minecraft-server
-  EOT
+  metadata {
+    user-data = data.template_file.cloud_init.rendered
+  }
 }
