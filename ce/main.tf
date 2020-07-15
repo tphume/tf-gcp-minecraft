@@ -6,7 +6,7 @@ provider "google" {
 
 // Get the latest Container-Optimized OS image
 data "google_compute_image" "cos" {
-  family = "cos-stable"
+  family  = "cos-stable"
   project = "cos-cloud"
 }
 
@@ -34,7 +34,7 @@ resource "google_compute_firewall" "web-server" {
 // Compute Engine instance configuration
 resource "google_compute_instance" "minecraft" {
   name         = var.ce
-  machine_type = "f1-micro"
+  machine_type = var.mtype
 
   tags = ["mc"]
 
