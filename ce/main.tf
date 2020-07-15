@@ -51,4 +51,8 @@ resource "google_compute_instance" "minecraft" {
       nat_ip = google_compute_address.minecraft.address
     }
   }
+
+  metadata_startup_script = <<EOT
+  docker run -d -p 80:25565 --restart always --name mc itzg/minecraft-server
+  EOT
 }
