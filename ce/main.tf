@@ -31,6 +31,12 @@ resource "google_compute_firewall" "web-server" {
   source_ranges = ["0.0.0.0/0"]
 }
 
+// Disk independent from instance for persistence
+resource "google_compute_disk" "minecraft" {
+  name        = var.ce
+  description = "Persistent Disk for Minecraft Google Compute Engine instance"
+}
+
 // Compute Engine instance configuration
 resource "google_compute_instance" "minecraft" {
   name         = var.ce
@@ -52,10 +58,20 @@ resource "google_compute_instance" "minecraft" {
     }
   }
 
+  lifecycle {
+    ignore_changes = [attached_disk]
+  }
+
   metadata_startup_script = <<EOT
-  docker run -d -p 80:25565 -e VERSION=${var.mc_version} -e MEMORY=3G \
+  docker run -d -p 25565:25565 -e VERSION=${var.mc_version} -e MEMORY=3G \
   -e EULA=TRUE --restart always --name mc itzg/minecraft-server
   EOT
 
   allow_stopping_for_update = true
+}
+
+// Attach the Compute Engine instance and the persistent disk
+resource "google_compute_attached_disk" "minecraft" {
+  disk     = google_compute_disk.minecraft.id
+  instance = google_compute_instance.minecraft.id
 }
