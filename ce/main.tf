@@ -33,8 +33,10 @@ resource "google_compute_firewall" "web-server" {
 
 // Disk independent from instance for persistence
 resource "google_compute_disk" "minecraft" {
-  name        = var.ce
-  description = "Persistent Disk for Minecraft Google Compute Engine instance"
+  name                      = var.ce
+  type                      = "pd-standard"
+  image                     = data.google_compute_image.cos.self_link
+  physical_block_size_bytes = 4096
 }
 
 // Compute Engine instance configuration
@@ -45,10 +47,7 @@ resource "google_compute_instance" "minecraft" {
   tags = ["mc"]
 
   boot_disk {
-    initialize_params {
-      type  = "pd-standard"
-      image = data.google_compute_image.cos.self_link
-    }
+    source = google_compute_disk.minecraft.self_link
   }
 
   network_interface {
@@ -69,10 +68,4 @@ resource "google_compute_instance" "minecraft" {
   EOT
 
   allow_stopping_for_update = true
-}
-
-// Attach the Compute Engine instance and the persistent disk
-resource "google_compute_attached_disk" "minecraft" {
-  disk     = google_compute_disk.minecraft.id
-  instance = google_compute_instance.minecraft.id
 }
