@@ -23,7 +23,7 @@ resource "google_compute_firewall" "web-server" {
 
   allow {
     protocol = "tcp"
-    ports    = ["80"]
+    ports    = ["25565"]
   }
 
   target_tags = ["mc"]
@@ -62,7 +62,7 @@ resource "google_compute_instance" "minecraft" {
   }
 
   metadata_startup_script = <<EOT
-  docker run -d -p 25565:25565 -e VERSION=${var.mc_version} -e MEMORY=3G \
+  docker run -d -p 25565:25565 -e VERSION=${var.mc_version} -e MEMORY=6G \
   -e EULA=TRUE -v mc:/data \
   --restart always --name mc itzg/minecraft-server
   EOT
