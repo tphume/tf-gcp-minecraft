@@ -47,7 +47,8 @@ resource "google_compute_instance" "minecraft" {
   tags = ["mc"]
 
   boot_disk {
-    source = google_compute_disk.minecraft.self_link
+    source      = google_compute_disk.minecraft.self_link
+    auto_delete = false
   }
 
   network_interface {
