@@ -33,7 +33,7 @@ resource "google_compute_firewall" "web-server" {
 
 // Disk independent from instance for persistence
 resource "google_compute_disk" "minecraft" {
-  name                      = var.ce
+  name                      = var.disk
   type                      = "pd-standard"
   image                     = data.google_compute_image.cos.self_link
   physical_block_size_bytes = 4096

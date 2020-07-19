@@ -18,6 +18,11 @@ variable "ce" {
   type        = string
 }
 
+variable "disk" {
+  description = "Name to be used for disk that's attached to Compute Engine instace"
+  type        = string
+}
+
 variable "mtype" {
   description = "Type of machine for Compute Engine instance"
   type        = string
