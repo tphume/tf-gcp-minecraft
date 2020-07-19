@@ -18,11 +18,6 @@ variable "disk" {
   type        = string
 }
 
-variable "snapshot" {
-  description = "Name to be used for snapshot that backsup the minecraft server"
-  type        = string
-}
-
 variable "ce" {
   description = "Name to be used for Compute Engine instance"
   type        = string
