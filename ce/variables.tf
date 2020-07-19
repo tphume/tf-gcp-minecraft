@@ -13,13 +13,18 @@ variable "zone" {
   type        = string
 }
 
-variable "ce" {
-  description = "Name to be used for Compute Engine instance"
+variable "disk" {
+  description = "Name to be used for disk that's attached to Compute Engine instace"
   type        = string
 }
 
-variable "disk" {
-  description = "Name to be used for disk that's attached to Compute Engine instace"
+variable "snapshot" {
+  description = "Name to be used for snapshot that backsup the minecraft server"
+  type        = string
+}
+
+variable "ce" {
+  description = "Name to be used for Compute Engine instance"
   type        = string
 }
 
