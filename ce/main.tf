@@ -12,7 +12,7 @@ data "google_compute_image" "cos" {
 
 // Static External address for the server
 resource "google_compute_address" "minecraft" {
-  name         = var.ce
+  name         = var.disk
   address_type = "EXTERNAL"
 }
 
