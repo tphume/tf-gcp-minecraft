@@ -13,6 +13,11 @@ variable "zone" {
   type        = string
 }
 
+variable "disk" {
+  description = "Name to be used for disk that's attached to Compute Engine instace"
+  type        = string
+}
+
 variable "ce" {
   description = "Name to be used for Compute Engine instance"
   type        = string

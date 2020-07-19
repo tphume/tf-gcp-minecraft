@@ -12,7 +12,7 @@ data "google_compute_image" "cos" {
 
 // Static External address for the server
 resource "google_compute_address" "minecraft" {
-  name         = var.ce
+  name         = var.disk
   address_type = "EXTERNAL"
 }
 
@@ -33,7 +33,7 @@ resource "google_compute_firewall" "web-server" {
 
 // Disk independent from instance for persistence
 resource "google_compute_disk" "minecraft" {
-  name                      = var.ce
+  name                      = var.disk
   type                      = "pd-standard"
   image                     = data.google_compute_image.cos.self_link
   physical_block_size_bytes = 4096
@@ -64,7 +64,7 @@ resource "google_compute_instance" "minecraft" {
 
   metadata_startup_script = <<EOT
   docker run -d -p 25565:25565 -e VERSION=${var.mc_version} -e MEMORY=6G \
-  -e EULA=TRUE -v mc:/data \
+  -e EULA=TRUE -v "$(pwd)"/mc:/data \
   --restart always --name mc itzg/minecraft-server
   EOT
 
