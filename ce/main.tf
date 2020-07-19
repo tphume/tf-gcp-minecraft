@@ -64,7 +64,7 @@ resource "google_compute_instance" "minecraft" {
 
   metadata_startup_script = <<EOT
   docker run -d -p 25565:25565 -e VERSION=${var.mc_version} -e MEMORY=6G \
-  -e EULA=TRUE -v "$(pwd)"mc:/data \
+  -e EULA=TRUE -v "$(pwd)"/mc:/data \
   --restart always --name mc itzg/minecraft-server
   EOT
 
