@@ -8,7 +8,12 @@ variable "region" {
   type        = string
 }
 
-variable "zone" {
-  description = "Zone to create resource in"
+variable "cluster" {
+  description = "Name of the Kubernetes cluster to be created"
+  type        = string
+}
+
+variable "node_pool" {
+  description = "Name of the node pool"
   type        = string
 }
