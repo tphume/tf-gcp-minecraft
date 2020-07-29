@@ -3,6 +3,9 @@ provider "google" {
   region  = var.region
 }
 
+data "google_client_config" "current" {
+}
+
 // Creates the GKE resource
 resource "google_container_cluster" "minecraft" {
   name = var.cluster
@@ -25,4 +28,14 @@ resource "google_container_node_pool" "minecraft" {
       "https://www.googleapis.com/auth/monitoring",
     ]
   }
+}
+
+// Connect to the Kubernetes cluster
+provider "kubernetes" {
+  load_config_file = false
+  host             = "https://${google_container_cluster.minecraft.endpoint}"
+  token            = data.google_client_config.provider.access_token
+  cluster_ca_certificate = base64decode(
+    data.google_container_cluster.my_cluster.master_auth[0].cluster_ca_certificate,
+  )
 }
