@@ -1,7 +1,8 @@
 provider "google" {
-  project = var.project
-  region  = var.region
-  zone    = var.zone
+  credentials = file("account.json")
+  project     = var.project
+  region      = var.region
+  zone        = var.zone
 }
 
 // Get the latest Container-Optimized OS image
