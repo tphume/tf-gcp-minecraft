@@ -13,7 +13,7 @@ data "google_compute_image" "cos" {
 
 // Static External address for the server
 resource "google_compute_address" "minecraft" {
-  name         = var.disk
+  name         = "minecraft-address"
   address_type = "EXTERNAL"
 }
 
@@ -34,7 +34,7 @@ resource "google_compute_firewall" "web-server" {
 
 // Disk independent from instance for persistence
 resource "google_compute_disk" "minecraft" {
-  name                      = var.disk
+  name                      = "minecraft-disk"
   type                      = "pd-standard"
   image                     = data.google_compute_image.cos.self_link
   physical_block_size_bytes = 4096
@@ -42,7 +42,7 @@ resource "google_compute_disk" "minecraft" {
 
 // Compute Engine instance configuration
 resource "google_compute_instance" "minecraft" {
-  name         = var.ce
+  name         = "minecraft-instance"
   machine_type = var.mtype
 
   tags = ["mc"]
