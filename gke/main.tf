@@ -1,6 +1,13 @@
+terraform {
+  required_providers {
+    google = "~> 3.32"
+  }
+}
+
 provider "google" {
-  project = var.project
-  region  = var.region
+  credentials = file("account.json")
+  project     = var.project
+  region      = var.region
 }
 
 data "google_client_config" "current" {
