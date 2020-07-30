@@ -22,3 +22,8 @@ variable "mc_version" {
   description = "Version of the Minecraft server"
   type        = string
 }
+
+variable "ram" {
+  description = "Amount of ram to allocate to the server"
+  type        = string
+}
